@@ -191,6 +191,53 @@
       margin-bottom: 1vw;
       display: block;
     }
+    /* Countdown styles */
+    .countdown-container {
+      position: fixed;
+      top: 2vw;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 1vw 2vw;
+      border-radius: 2vw;
+      z-index: 20;
+      box-shadow: 0 2px 12px #0009;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .countdown-title {
+      font-size: 2vw;
+      font-weight: bold;
+      color: #ffe066;
+      margin-bottom: 0.7vw;
+      letter-spacing: 1px;
+      text-align: center;
+      text-shadow: 0 2px 12px #000a;
+    }
+    .countdown {
+      display: flex;
+      gap: 1vw;
+      font-size: 2vw;
+      font-weight: bold;
+      color: #fff;
+      justify-content: center;
+      text-shadow: 0 2px 8px #222a;
+    }
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 3vw;
+    }
+    .countdown-label {
+      font-size: 1vw;
+      color: #ffe066;
+      margin-top: 0.15vw;
+      text-shadow: none;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -201,6 +248,15 @@
     <img class="slide" src="https://raw.githubusercontent.com/madhupatelpspk/marriage-life/refs/heads/main/img/04.jpg" alt="Wedding Pic 4">
     <img class="slide" src="https://raw.githubusercontent.com/madhupatelpspk/marriage-life/refs/heads/main/img/05.jpg" alt="Wedding Pic 5">
   </div>
+  
+  <!-- Birthday Countdown -->
+  <div class="countdown-container" id="countdownContainer">
+    <div class="countdown-title">🎈 Birthday Party Countdown 🎈</div>
+    <div class="countdown" id="countdown">
+      <!-- Timer will be inserted here -->
+    </div>
+  </div>
+  
   <div class="overlay">
     <div class="anniversary-text">💖 🥳 Advance Happy Birth Day Mummy 🥳 💖</div>
     <div class="names">Thana Sri; </div>
@@ -267,6 +323,46 @@ Wishing you a fantastic day filled with joy, laughter, and all your favorite thi
         surpriseModal.style.display = 'none';
       }
     });
+
+    // Birthday Countdown
+    function updateCountdown() {
+      const countdown = document.getElementById('countdown');
+      // Target date: August 10, 2025, 00:00:00 local time
+      const target = new Date(2025, 7, 10, 0, 0, 0); // month is 0-indexed (7 = August)
+      const now = new Date();
+      let diff = target - now;
+      if (diff <= 0) {
+        countdown.innerHTML = "<span style='font-size:2vw;color:#ffe066;'>🎉 It's Party Time! 🎉</span>";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const minutes = Math.floor(diff / (1000 * 60));
+      diff -= minutes * (1000 * 60);
+      const seconds = Math.floor(diff / 1000);
+      countdown.innerHTML = `
+        <div class="countdown-item">
+          <div>${days}</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-item">
+          <div>${hours.toString().padStart(2,'0')}</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+          <div>${minutes.toString().padStart(2,'0')}</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div>${seconds.toString().padStart(2,'0')}</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      `;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 </body>
-</html
+</html>
