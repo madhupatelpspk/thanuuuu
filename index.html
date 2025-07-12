@@ -110,6 +110,71 @@
       background: linear-gradient(90deg, #ffcc33, #ffb347);
       transform: translateX(-50%) scale(1.05);
     }
+    /* Love letter button style */
+    .love-letter-btn {
+      position: fixed;
+      bottom: 14vw;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      padding: 1vw 3vw;
+      font-size: 2vw;
+      color: #fff;
+      background: linear-gradient(90deg, #e55d87, #5fc3e4);
+      border: none;
+      border-radius: 2vw;
+      box-shadow: 0 2px 15px #000a;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      outline: none;
+      font-family: inherit;
+      font-weight: bold;
+    }
+    .love-letter-btn:hover {
+      background: linear-gradient(90deg, #5fc3e4, #e55d87);
+      transform: translateX(-50%) scale(1.05);
+    }
+    /* Love letter modal */
+    .love-letter-modal {
+      display: none;
+      position: fixed;
+      z-index: 21;
+      left: 0; top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      animation: fadein 0.4s;
+    }
+    .love-modal-content {
+      background: #fffbe6;
+      color: #333;
+      border-radius: 1.5vw;
+      padding: 3vw 4vw;
+      max-width: 80vw;
+      text-align: center;
+      box-shadow: 0 4px 32px #000c;
+      font-size: 2.5vw;
+      position: relative;
+    }
+    .love-close-btn {
+      position: absolute;
+      top: 1vw;
+      right: 2vw;
+      background: none;
+      border: none;
+      font-size: 2vw;
+      color: #e55d87;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .love-modal-heart {
+      font-size: 4vw;
+      color: #e55d87;
+      margin-bottom: 1vw;
+      display: block;
+    }
     /* Made with love button */
     .love-btn-link {
       text-decoration: none;
@@ -262,6 +327,8 @@
     <div class="names">♥️ Thana Sri ♥️ </div>
     <div class="subtitle">Wishing you a lifetime of joy and happiness ♥️😍👣</div>
   </div>
+  <!-- Love Letter button -->
+  <button class="love-letter-btn" id="loveLetterBtn">💌 Love Letter</button>
   <button class="surprise-btn" id="surpriseBtn">🎁 Surprise</button>
   <a class="love-btn-link" href="https://instagram.com/ig_madhuuuuu" target="_blank" rel="noopener">
     <button class="love-btn">
@@ -269,6 +336,15 @@
       your lovingly 🥰
     </button>
   </a>
+  <!-- Love Letter Modal -->
+  <div class="love-letter-modal" id="loveLetterModal">
+    <div class="love-modal-content">
+      <button class="love-close-btn" id="closeLoveModalBtn">&times;</button>
+      <span class="love-modal-heart">💖</span>
+      <div id="loveLetterText" style="font-size:2vw;color:#e55d87;min-height:5vw;"></div>
+      <span style="font-size:1.2vw; color:#e55d87;display:block;margin-top:1vw;">– 𝐌𝐚𝐝𝐡𝐮 </span>
+    </div>
+  </div>
   <div class="surprise-modal" id="surpriseModal">
     <div class="modal-content">
       <button class="close-btn" id="closeModalBtn">&times;</button>
@@ -321,6 +397,41 @@ Wishing you a fantastic day filled with joy, laughter, and all your favorite thi
     surpriseModal.addEventListener('click', function(e) {
       if (e.target === surpriseModal) {
         surpriseModal.style.display = 'none';
+      }
+    });
+
+    // Love Letter modal logic
+    const loveLetterBtn = document.getElementById('loveLetterBtn');
+    const loveLetterModal = document.getElementById('loveLetterModal');
+    const closeLoveModalBtn = document.getElementById('closeLoveModalBtn');
+    const loveLetterText = document.getElementById('loveLetterText');
+    const loveQuote = 'To the most precious person in my life, my dear mummy: Your love is the greatest gift I’ve ever received. You fill every day with warmth, laughter, and endless care. I am beyond grateful for you. Happy Birthday, my heart!';
+
+    function typeText(text, element, speed = 50) {
+      element.innerHTML = '';
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    loveLetterBtn.addEventListener('click', function() {
+      loveLetterModal.style.display = 'flex';
+      typeText(loveQuote, loveLetterText, 50);
+    });
+
+    closeLoveModalBtn.addEventListener('click', function() {
+      loveLetterModal.style.display = 'none';
+    });
+
+    loveLetterModal.addEventListener('click', function(e) {
+      if (e.target === loveLetterModal) {
+        loveLetterModal.style.display = 'none';
       }
     });
 
