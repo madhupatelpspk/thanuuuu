@@ -110,71 +110,6 @@
       background: linear-gradient(90deg, #ffcc33, #ffb347);
       transform: translateX(-50%) scale(1.05);
     }
-    /* Love letter button style */
-    .love-letter-btn {
-      position: fixed;
-      bottom: 14vw;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      padding: 1vw 3vw;
-      font-size: 2vw;
-      color: #fff;
-      background: linear-gradient(90deg, #e55d87, #5fc3e4);
-      border: none;
-      border-radius: 2vw;
-      box-shadow: 0 2px 15px #000a;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      outline: none;
-      font-family: inherit;
-      font-weight: bold;
-    }
-    .love-letter-btn:hover {
-      background: linear-gradient(90deg, #5fc3e4, #e55d87);
-      transform: translateX(-50%) scale(1.05);
-    }
-    /* Love letter modal */
-    .love-letter-modal {
-      display: none;
-      position: fixed;
-      z-index: 21;
-      left: 0; top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-      animation: fadein 0.4s;
-    }
-    .love-modal-content {
-      background: #fffbe6;
-      color: #333;
-      border-radius: 1.5vw;
-      padding: 3vw 4vw;
-      max-width: 80vw;
-      text-align: center;
-      box-shadow: 0 4px 32px #000c;
-      font-size: 2.5vw;
-      position: relative;
-    }
-    .love-close-btn {
-      position: absolute;
-      top: 1vw;
-      right: 2vw;
-      background: none;
-      border: none;
-      font-size: 2vw;
-      color: #e55d87;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .love-modal-heart {
-      font-size: 4vw;
-      color: #e55d87;
-      margin-bottom: 1vw;
-      display: block;
-    }
     /* Made with love button */
     .love-btn-link {
       text-decoration: none;
@@ -303,7 +238,70 @@
       text-shadow: none;
       font-weight: 500;
     }
+
+    /* Letter Box Styles */
+    .letter-box-container {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: 90vw;
+      max-width: 600px;
+      padding-bottom: 2vw;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .letter-box {
+      background: linear-gradient(90deg, #ffe0ec 0%, #e0f7fa 100%);
+      border-radius: 2vw 2vw 0 0;
+      box-shadow: 0 2px 24px #0007;
+      padding: 2vw 3vw 2vw 3vw;
+      min-height: 8vw;
+      width: 100%;
+      font-family: 'Dancing Script', 'Segoe UI', cursive, sans-serif;
+      font-size: 2vw;
+      color: #b1467c;
+      text-align: center;
+      border: 2px solid #f8bbd0;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 1px;
+    }
+    .letter-box-heart {
+      position: absolute;
+      top: 1vw;
+      right: 2vw;
+      font-size: 2vw;
+      color: #ff69b4;
+      animation: heartBeat 1.2s infinite alternate;
+    }
+    @keyframes heartBeat {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+    .letter-sign {
+      margin-top: 1vw;
+      font-size: 1.4vw;
+      color: #b1467c;
+      font-family: 'Segoe UI', cursive, sans-serif;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-align: right;
+      width: 100%;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .letter-box-container {max-width: none;width: 96vw;}
+      .letter-box {font-size: 4vw;padding: 4vw;}
+      .letter-box-heart {font-size: 4vw;}
+      .letter-sign {font-size: 2.5vw;}
+    }
   </style>
+  <!-- Dancing Script font for handwriting effect -->
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="slideshow-container">
@@ -327,8 +325,6 @@
     <div class="names">♥️ Thana Sri ♥️ </div>
     <div class="subtitle">Wishing you a lifetime of joy and happiness ♥️😍👣</div>
   </div>
-  <!-- Love Letter button -->
-  <button class="love-letter-btn" id="loveLetterBtn">💌 Love Letter</button>
   <button class="surprise-btn" id="surpriseBtn">🎁 Surprise</button>
   <a class="love-btn-link" href="https://instagram.com/ig_madhuuuuu" target="_blank" rel="noopener">
     <button class="love-btn">
@@ -336,15 +332,6 @@
       your lovingly 🥰
     </button>
   </a>
-  <!-- Love Letter Modal -->
-  <div class="love-letter-modal" id="loveLetterModal">
-    <div class="love-modal-content">
-      <button class="love-close-btn" id="closeLoveModalBtn">&times;</button>
-      <span class="love-modal-heart">💖</span>
-      <div id="loveLetterText" style="font-size:2vw;color:#e55d87;min-height:5vw;"></div>
-      <span style="font-size:1.2vw; color:#e55d87;display:block;margin-top:1vw;">– 𝐌𝐚𝐝𝐡𝐮 </span>
-    </div>
-  </div>
   <div class="surprise-modal" id="surpriseModal">
     <div class="modal-content">
       <button class="close-btn" id="closeModalBtn">&times;</button>
@@ -356,10 +343,20 @@ Wishing you a fantastic day filled with joy, laughter, and all your favorite thi
       </div>
     </div>
   </div>
-  <audio id="bgmusic" src="https://github.com/madhupatelpspk/madhuuuuu/raw/refs/heads/main/assets/mp3/song.mp" autoplay loop></audio>
+  <audio id="bgmusic" src="https://github.com/madhupatelpspk/madhuuuuu/raw/refs/heads/main/assets/mp3/song.mp3" autoplay loop></audio>
   <div class="music-credit">
     Music: madhuuuuu
   </div>
+
+  <!-- Letter Box with Love Quote and Writing Animation -->
+  <div class="letter-box-container">
+    <div class="letter-box">
+      <span class="letter-box-heart">💌</span>
+      <span id="loveLetter"></span>
+      <span class="letter-sign" id="letterSign"></span>
+    </div>
+  </div>
+  
   <script>
     // Slideshow logic
     const slides = document.querySelectorAll('.slide');
@@ -397,40 +394,6 @@ Wishing you a fantastic day filled with joy, laughter, and all your favorite thi
     surpriseModal.addEventListener('click', function(e) {
       if (e.target === surpriseModal) {
         surpriseModal.style.display = 'none';
-      }
-    });
-
-    // Love Letter modal logic
-    const loveLetterBtn = document.getElementById('loveLetterBtn');
-    const loveLetterModal = document.getElementById('loveLetterModal');
-    const closeLoveModalBtn = document.getElementById('closeLoveModalBtn');
-    const loveLetterText = document.getElementById('loveLetterText');
-    const loveQuote = 'To my dearest mummy Thank you for every hug, every smile, and every moment of care....I love you more than words can say...😇 Happy Birthday Mummy Love you 🥰💖;
-    function typeText(text, element, speed = 50) {
-      element.innerHTML = '';
-      let i = 0;
-      function type() {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(type, speed);
-        }
-      }
-      type();
-    }
-
-    loveLetterBtn.addEventListener('click', function() {
-      loveLetterModal.style.display = 'flex';
-      typeText(loveQuote, loveLetterText, 50);
-    });
-
-    closeLoveModalBtn.addEventListener('click', function() {
-      loveLetterModal.style.display = 'none';
-    });
-
-    loveLetterModal.addEventListener('click', function(e) {
-      if (e.target === loveLetterModal) {
-        loveLetterModal.style.display = 'none';
       }
     });
 
@@ -473,6 +436,44 @@ Wishing you a fantastic day filled with joy, laughter, and all your favorite thi
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    // Letter box writing animation
+    const loveQuote = `To my dearest mummy,<br>
+    Thank you for every hug, every smile, and every moment of care.<br>
+    I love you more than words can say. Happy Birthday!`;
+    const signText = "With endless love, Madhuuuu 💖";
+    
+    const letterElem = document.getElementById('loveLetter');
+    const signElem = document.getElementById('letterSign');
+    let letterPos = 0;
+    let letterText = '';
+    let writingInterval = null;
+
+    function typeLetter() {
+      if (letterPos < loveQuote.length) {
+        // support <br>
+        if (loveQuote.substr(letterPos, 4) === '<br>') {
+          letterText += '<br>';
+          letterPos += 4;
+        } else {
+          letterText += loveQuote[letterPos];
+          letterPos++;
+        }
+        letterElem.innerHTML = letterText;
+      } else if (signElem.innerHTML === '') {
+        // Once letter is fully written, show signature with fade-in
+        signElem.style.opacity = 0;
+        signElem.innerHTML = signText;
+        let op = 0;
+        let fade = setInterval(() => {
+          op += 0.07;
+          signElem.style.opacity = op;
+          if (op >= 1) clearInterval(fade);
+        }, 50);
+        clearInterval(writingInterval);
+      }
+    }
+    writingInterval = setInterval(typeLetter, 38); // ~26 chars/sec handwriting speed
   </script>
 </body>
 </html>
